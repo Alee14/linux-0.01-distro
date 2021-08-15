@@ -1,0 +1,30 @@
+#!/bin/csh -f
+
+if (! -d /usr/local/lib/gnu) then
+  mkdir /usr/local/lib/gnu
+endif
+
+# Make a dummy "libg.a".
+/bin/ar q /tmp/libg$$.a
+hpxt /tmp/libg$$.a /usr/local/lib/gnu/libg.a
+rm -f /tmp/libg$$.a
+
+# Note: ordering of directories must be reverse of the normal search
+# order!  This is because we are compressing all of the directories
+# into a single directory.  If two directories each contain a library
+# with the same name, the one we convert second will be the one we
+# end up with.
+
+foreach dir (/usr/local/lib /usr/lib /lib)
+  cd $dir
+  foreach i (lib*.a)
+    echo "$dir/$i"
+    hpxt $i /usr/local/lib/gnu/$i
+  end
+end
+
+cd /lib
+foreach i (*crt0.o)
+  echo "/lib/$i"
+  hpxt $i /usr/local/lib/gnu/$i
+end

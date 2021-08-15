@@ -1,0 +1,20 @@
+extern char *iou_program_name;
+extern void iou_set_program_name ();
+extern void iou_abort ();
+extern void iou_abort_handler_bind ();
+extern void iou_warning ();
+extern void iou_error ();
+extern void iou_fatal_error ();
+extern void iou_call_warning ();
+extern void iou_call_error ();
+extern void iou_stat ();
+extern void iou_unlink ();
+extern int iou_open ();
+extern void iou_close ();
+extern long iou_lseek ();
+extern int iou_read ();
+extern void iou_write ();
+extern char *iou_malloc ();
+extern char *iou_realloc ();
+#define iou_free free
+extern void iou_free ();
